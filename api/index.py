@@ -29,21 +29,21 @@ except Exception as e:
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         
-    #Parse Query parameters
-    query = parse_qs(urlparse(self.path).query)
-    names = query.get('name', []) #Get the name parameter as a list   
+        #Parse Query parameters
+        query = parse_qs(urlparse(self.path).query)
+        names = query.get('name', []) #Get the name parameter as a list   
+            
+        #Retrieve Marks from the json file with the name parsed from the URL
+        marks = [students.get(name, "Not Found") for name in names]
+            
+        #Enable CORS
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*') # This is enabling CORS
+        self.end_headers()
         
-    #Retrieve Marks from the json file with the name parsed from the URL
-    marks = [students.get(name, "Not Found") for name in names]
-        
-    #Enable CORS
-    self.send_response(200)
-    self.send_header('Content-type', 'application/json')
-    self.send_header('Access-Control-Allow-Origin', '*') # This is enabling CORS
-    self.end_headers()
-    
-    #Send JSON response
-    response = {"marks": marks}
-    self.wfile.write(json.dumps(response).encode('utf-8'))
-    return
-        
+        #Send JSON response
+        response = {"marks": marks}
+        self.wfile.write(json.dumps(response).encode('utf-8'))
+        return
+            
