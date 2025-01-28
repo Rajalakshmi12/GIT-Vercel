@@ -30,7 +30,7 @@ class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         
     #Parse Query parameters
-    query = parse_qs(urlparse(slef.path).query)
+    query = parse_qs(urlparse(self.path).query)
     names = query.get('name', []) #Get the name parameter as a list   
         
     #Retrieve Marks from the json file with the name parsed from the URL
