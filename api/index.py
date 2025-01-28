@@ -14,10 +14,18 @@ import json
 from http.server import BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
+
+
+
+
 # Load the Json file with student data
-with open('q-vercel-python.json','r') as file:
-    students = json.load(file)
-    
+try:
+    with open('q-vercel-python.json','r') as file:
+        students = json.load(file)
+except Exception as e:
+    students = {}
+    print(f"Error loading students.json: {e}")
+        
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         
